@@ -12,8 +12,10 @@ $T(\lambda)$ represents the simulated transmission spectrum, $L(\lambda)$ the V-
 $$T_{sol} = \frac{\int_{200\,nm}^{3000\,nm}{T(\lambda)G(\lambda)} d\lambda}{\int_{200\,nm}^{3000\,nm}{G(\lambda)} d\lambda}$$
 $T(\lambda)$ represents the simulated transmission spectrum and $G(\lambda)$ the ASTM-G-173 (Global Total Spectral Irradiance. tilt 37°)
 
+The difference between the two states semiconducting and metallic is described as follows:
 $$\Delta T_{lum, sol} = T_{lum, sol}(semiconductive) - T_{lum, sol} (metallic)\\$$
 
+The difference between the two states semiconducting and metallic at a wavelength of 2500nm is called switching deviation:
 $$\Delta T_{@2500\,nm} = T_{@2500\,nm}(semiconductive) - T_{@2500\,nm}(metallic)\\$$
 
 # Requirements
