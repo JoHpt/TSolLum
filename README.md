@@ -7,12 +7,14 @@ the results in form of optical parameters like Tlum(Me), Tlum(Sc), Tsol(Me), Tso
 Mathematical Formlua
 ___________________
 $$T_{lum} = \frac{\int_{380\,nm}^{780\,nm}{T(\lambda)L(\lambda)g(\lambda)} d\lambda}{\int_{380\,nm}^{780\,nm}{L(\lambda)g(\lambda)} d\lambda}$$
+$$T(\lambda)$$ represents the simulated transmission spectrum, $$L(\lambda)$$ the V-Lambda curve and $$g(\lambda)$$ the CIE standard illuminant D65.
 
-$T_{sol} = \frac{\int_{200\,nm}^{3000\,nm}{T(\lambda)G(\lambda)} d\lambda}{\int_{200\,nm}^{3000\,nm}{G(\lambda)} d\lambda}
+$$T_{sol} = \frac{\int_{200\,nm}^{3000\,nm}{T(\lambda)G(\lambda)} d\lambda}{\int_{200\,nm}^{3000\,nm}{G(\lambda)} d\lambda}$$
+$$T(\lambda)$$ represents the simulated transmission spectrum and $$G(\lambda)$$ the ASTM-G-173 (Global Total Spectral Irradiance. tilt 37°)
 
-$\Delta T_{lum, sol} = T_{lum, sol}(semiconductive) - T_{lum, sol} (metallic)\\
+$$\Delta T_{lum, sol} = T_{lum, sol}(semiconductive) - T_{lum, sol} (metallic)\\$$
+$$\Delta T_{@2500\,nm} = T_{@2500\,nm}(semiconductive) - T_{@2500\,nm}(metallic)\\$$
 
-$\Delta T_{@2500\,nm} = T_{@2500\,nm}(semiconductive) - T_{@2500\,nm}(metallic)\\
 
 Requirements
 ____________
