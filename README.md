@@ -1,22 +1,17 @@
-  _______ _____       _ _                        _____      _            _       _             
- |__   __/ ____|     | | |                      / ____|    | |          | |     | |            
-    | | | (___   ___ | | |    _   _ _ __ ___   | |     __ _| | ___ _   _| | __ _| |_ ___  _ __ 
-    | |  \___ \ / _ \| | |   | | | | '_ ` _ \  | |    / _` | |/ __| | | | |/ _` | __/ _ \| '__|
-    | |  ____) | (_) | | |___| |_| | | | | | | | |___| (_| | | (__| |_| | | (_| | || (_) | |   
-    |_| |_____/ \___/|_|______\__,_|_| |_| |_|  \_____\__,_|_|\___|\__,_|_|\__,_|\__\___/|_|   
-                                                                                               
-                                                                                               
 Introduction
 ____________
-	This spectra analysis program is designed to analyze simulated transmission spectra and saves
-	the results in form of optical parameters like Tlum(Me), Tlum(Sc), Tsol(Me), Tsol(Sc), ΔTlum,
-	ΔTsol and ΔT@2500nm. It also plots those optical parameters in respect to the given layer thicknesses.
+This spectra analysis program is designed to analyze simulated transmission spectra and saves
+the results in form of optical parameters like Tlum(Me), Tlum(Sc), Tsol(Me), Tsol(Sc), ΔTlum,
+ΔTsol and ΔT@2500nm. It also plots those optical parameters in respect to the given layer thicknesses.
 
 Mathematical Formlua
 ___________________
 $T_{lum} = \frac{\int_{380\,nm}^{780\,nm}{T(\lambda)L(\lambda)g(\lambda)} d\lambda}{\int_{380\,nm}^{780\,nm}{L(\lambda)g(\lambda)} d\lambda}
+
 $T_{sol} = \frac{\int_{200\,nm}^{3000\,nm}{T(\lambda)G(\lambda)} d\lambda}{\int_{200\,nm}^{3000\,nm}{G(\lambda)} d\lambda}
+
 $\Delta T_{lum, sol} = T_{lum, sol}(semiconductive) - T_{lum, sol} (metallic)\\
+
 $\Delta T_{@2500\,nm} = T_{@2500\,nm}(semiconductive) - T_{@2500\,nm}(metallic)\\
 
 Requirements
