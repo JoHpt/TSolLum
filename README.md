@@ -13,6 +13,7 @@ $$T_{sol} = \frac{\int_{200\,nm}^{3000\,nm}{T(\lambda)G(\lambda)} d\lambda}{\int
 $T(\lambda)$ represents the simulated transmission spectrum and $G(\lambda)$ the ASTM-G-173 (Global Total Spectral Irradiance. tilt 37°)
 
 $$\Delta T_{lum, sol} = T_{lum, sol}(semiconductive) - T_{lum, sol} (metallic)\\$$
+
 $$\Delta T_{@2500\,nm} = T_{@2500\,nm}(semiconductive) - T_{@2500\,nm}(metallic)\\$$
 
 # Requirements
