@@ -6,7 +6,7 @@ the results in form of optical parameters like Tlum(Me), Tlum(Sc), Tsol(Me), Tso
 
 Mathematical Formlua
 ___________________
-$T_{lum} = \frac{\int_{380\,nm}^{780\,nm}{T(\lambda)L(\lambda)g(\lambda)} d\lambda}{\int_{380\,nm}^{780\,nm}{L(\lambda)g(\lambda)} d\lambda}
+$$T_{lum} = \frac{\int_{380\,nm}^{780\,nm}{T(\lambda)L(\lambda)g(\lambda)} d\lambda}{\int_{380\,nm}^{780\,nm}{L(\lambda)g(\lambda)} d\lambda}$$
 
 $T_{sol} = \frac{\int_{200\,nm}^{3000\,nm}{T(\lambda)G(\lambda)} d\lambda}{\int_{200\,nm}^{3000\,nm}{G(\lambda)} d\lambda}
 
@@ -16,10 +16,10 @@ $\Delta T_{@2500\,nm} = T_{@2500\,nm}(semiconductive) - T_{@2500\,nm}(metallic)\
 
 Requirements
 ____________
-•	pandas
-•	numpy
-•	scipy
-•	matplotlib
+- pandas
+- numpy
+- scipy
+- matplotlib
 
 Installation
 ____________
@@ -51,6 +51,6 @@ For more information, such as naming the input spectra or structure of the mappi
 Credits
 ______
 The program was implemented as part of the following projects at the Institute for Experimental Physics I of the Justus Liebig University Giessen:
-•	DFG "Kombi VO2" (510965362)
-•	BMBF "IntelVanaGlas" (03VP09691)
+- DFG "Kombi VO2" (510965362)
+- BMBF "IntelVanaGlas" (03VP09691)
 
