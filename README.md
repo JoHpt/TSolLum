@@ -25,10 +25,10 @@ Installation
 ____________
 1.	Ensure that Python is installed on your system by running python -V in the command line.
 2.	Install the required packages by running the following statements in the command line:
-	pip install pandas
-	pip install numpy
-	pip install scipy
-	pip install matplotlib
+- pip install pandas
+- pip install numpy
+- pip install scipy
+- pip install matplotlib
 
 Usage
 _____
