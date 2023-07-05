@@ -1,0 +1,1 @@
+The simulated spectra are stored here. Please delete this file before you start running the program.
