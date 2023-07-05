@@ -25,8 +25,9 @@ Requirements
 - scipy
 - matplotlib
 
-Installation
 ____________
+Installation
+
 1.	Ensure that Python is installed on your system by running python -V in the command line.
 2.	Install the required packages by running the following statements in the command line:
 - pip install pandas
