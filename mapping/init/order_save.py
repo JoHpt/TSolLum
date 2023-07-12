@@ -1,7 +1,8 @@
-'''This module saves the results of the calculation of the optical parameters
+"""
+This module saves the results of the calculation of the optical parameters
 in a ".txt" file in a form with which a graphical representation is
 subsequently realised.
-'''
+"""
 import pandas as pd
 from calculation import calculate
 

@@ -1,14 +1,17 @@
-"""This module reads the transmission spectra of the VO2 and prepares them for
+"""
+This module reads the transmission spectra of the VO2 and prepares them for
 the calculation.
 """
 import glob
+
 import numpy as np
 import pandas as pd
 from scipy.interpolate import interp1d
 
 
 def load_spectra() -> dict:
-    '''Info
+    """
+    Info
     ----
     This function reads the transmission spectra from the folder
     "input_spectra" and prepares them in a dictionary to use them for the
@@ -24,7 +27,7 @@ def load_spectra() -> dict:
         Form of the dictionary:
             {"Filename" : metallic DataFrame, semiconductive DataFrame,
              ...}
-    '''
+    """
     # Reads the spectra with the help of the glob module.
     simulated_spectra = glob.glob("./input_spectra/*.txt")
 
@@ -37,7 +40,8 @@ def load_spectra() -> dict:
     # and metallic transmission spectrum must be present for each layer
     # system of VO2.
     if len(metallic_spectra) != len(semiconductive_spectra):
-        msg = "Check your folder with the simulated spectra. There are not equally spectra for metallic and semiconducting states."
+        msg = ("Check your folder with the simulated spectra. There are not"
+               "equally spectra for metallic and semiconducting states.")
         raise FileNotFoundError(msg)
 
     # Initializes an empty dictionary and iterates over the lists containing
@@ -49,7 +53,9 @@ def load_spectra() -> dict:
         # ("_me_" or "_sc_"). A calculation of the characteristics from
         # different sample series is not useful.
         if metallic.replace("_me_", "") != semiconductive.replace("_sc_", ""):
-            msg = "Check the file names and remember to name the metallic and semiconducting states the same, with the difference of '_me_' or '_sc_'."
+            msg = ("Check the file names and remember to name the metallic and"
+                   "semiconducting states the same, with the difference"
+                   "of '_me_' or '_sc_'.")
             raise NameError(msg)
 
         # Reads the data for the metallic state into a DataFrame.
@@ -79,8 +85,10 @@ def load_spectra() -> dict:
 
         # The same is done for the semiconducting states and their
         # transmission spectra.
-        semiconductive_spec = pd.read_csv(semiconductive, sep="\t", decimal=",").dropna(axis=1)
-        semiconductive_spec = semiconductive_spec.rename(columns={semiconductive_spec.columns[0]: "Wavelength (nm)"})
+        semiconductive_spec = pd.read_csv(
+            semiconductive, sep="\t", decimal=",").dropna(axis=1)
+        semiconductive_spec = semiconductive_spec.rename(
+            columns={semiconductive_spec.columns[0]: "Wavelength (nm)"})
 
         start = int(semiconductive_spec["Wavelength (nm)"].iloc[0])
         end = int(semiconductive_spec["Wavelength (nm)"].iloc[-1])

@@ -1,4 +1,5 @@
-'''This program is designed for the calculation of optical characteristics for
+"""
+This program is designed for the calculation of optical characteristics for
 thin film systems based on VO2. These characteristics are derived from
 transmission spectra. The optical characteristics are:
     - Tlum (metallic state)
@@ -22,12 +23,12 @@ metallic state, "_me_" must be present in the file name. For the
 semiconducting state correspondingly "_sc_".
 
 Furthermore, the transmission spectra must be saved in ".txt" format.
-'''
+"""
 import sys
+
+from calculation import calculate
 
 # caution: path[0] is reserved for script path (or '' in REPL)
 sys.path.insert(1, "./init/")
-
-from calculation import calculate
 
 calculate()

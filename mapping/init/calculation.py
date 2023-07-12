@@ -1,4 +1,5 @@
-"""This module is used for calculation of optical characteristics of transmission
+"""
+This module is used for calculation of optical characteristics of transmission
 spectra of VO2 thin film systems.
 """
 
@@ -8,7 +9,8 @@ from scipy.integrate import simpson
 
 
 def calculate() -> dict:
-    '''Info
+    """
+    Info
     ----
     The function uses the entered simulated spectra of VO2 and calculates them
     with the help of the reference spectra:
@@ -36,7 +38,7 @@ def calculate() -> dict:
                                  {"Tsol" : metallic, semiconductive, delta},
                                  {"T@2500nm" : T@2500nm},
             ...
-    '''
+    """
     # Reads in the reference spectra.
     d65 = pd.read_csv(".\\init\\reference_spectra\\d65.txt", sep="\t")
     vlambda = pd.read_csv(".\\init\\reference_spectra\\v-lambda.txt", sep="\t")
@@ -71,11 +73,11 @@ def calculate() -> dict:
         # Cuts the spectra for the calculation of Tlum to a wavelength range
         # from 380 to 780nm. The optical characteristics for the metallic and
         # semiconducting states are calculated simultaneously.
-        Tlum_me = (metallic_map[(metallic_map["Wavelength (nm)"] >= 380) &
+        tlum_me = (metallic_map[(metallic_map["Wavelength (nm)"] >= 380) &
                                 (metallic_map["Wavelength (nm)"] <= 780)]
                         ).reset_index(drop=True)
 
-        Tlum_sc = (semiconductive_map[(semiconductive_map["Wavelength (nm)"] >= 380) &
+        tlum_sc = (semiconductive_map[(semiconductive_map["Wavelength (nm)"] >= 380) &
                                 (semiconductive_map["Wavelength (nm)"] <= 780)]
                         ).reset_index(drop=True)
 
@@ -84,10 +86,10 @@ def calculate() -> dict:
         # range using Simpson's rule.
         denominator = simpson(
             d65["CIE Standard Illuminant D65"] * vlambda["spectral sensistivity"],
-            x=Tlum_me["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+            x=tlum_me["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
         # An empty dictionary for the values of Tlum is initialized.
-        Tlum_dict = {}
+        tlum_dict = {}
 
         # It is iterated over the buffer layer thickness and Tlum is
         # calculated.
@@ -99,27 +101,27 @@ def calculate() -> dict:
 
             # This is done for the metallic and semiconductive state of the VO2.
             numerator_metallic = simpson(
-                Tlum_me[thickness] *
+                tlum_me[thickness] *
                 d65["CIE Standard Illuminant D65"] *
                 vlambda["spectral sensistivity"],
-                x=Tlum_me["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+                x=tlum_me["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
             numerator_semiconductive = simpson(
-                Tlum_sc[thickness] *
+                tlum_sc[thickness] *
                 d65["CIE Standard Illuminant D65"] *
                 vlambda["spectral sensistivity"],
-                x=Tlum_sc["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+                x=tlum_sc["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
             # The fraction of the numerator and denominator is calculated for
             # the metallic and semiconducting state.
-            Tlum_metallic = numerator_metallic / denominator
-            Tlum_semiconductive = numerator_semiconductive / denominator
+            tlum_metallic = numerator_metallic / denominator
+            tlum_semiconductive = numerator_semiconductive / denominator
 
             # The difference between the two states is calculated.
-            deltaTlum = Tlum_semiconductive - Tlum_metallic
+            delta_tlum = tlum_semiconductive - tlum_metallic
 
             # The calculated characteristics are added to the dictionary.
-            Tlum_dict[thickness] = Tlum_metallic, Tlum_semiconductive, deltaTlum
+            tlum_dict[thickness] = tlum_metallic, tlum_semiconductive, delta_tlum
 
         # ==================================================== #
         # ===================Calculate Tsol=================== #
@@ -128,11 +130,11 @@ def calculate() -> dict:
         # Cuts the spectra for the calculation of Tsol to a wavelength range
         # from 200 to 3000nm. The optical characteristics for the metallic and
         # semiconducting states are calculated simultaneously.
-        Tsol_me = (metallic_map[(metallic_map["Wavelength (nm)"] >= 200) &
+        tsol_me = (metallic_map[(metallic_map["Wavelength (nm)"] >= 200) &
                                 (metallic_map["Wavelength (nm)"] <= 3000)]
                         ).reset_index(drop=True)
 
-        Tsol_sc = (semiconductive_map[(semiconductive_map["Wavelength (nm)"] >= 200) &
+        tsol_sc = (semiconductive_map[(semiconductive_map["Wavelength (nm)"] >= 200) &
                                 (semiconductive_map["Wavelength (nm)"] <= 3000)]
                         ).reset_index(drop=True)
 
@@ -141,10 +143,10 @@ def calculate() -> dict:
         # range using Simpson's rule.
         denominator = simpson(
             astm_g_173["Global Total Spectral Irradiance. tilt 37Deg"],
-            x=Tsol_me["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+            x=tsol_me["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
         # An empty dictionary for the values of Tsol is initialized.
-        Tsol_dict = {}
+        tsol_dict = {}
 
         # It is iterated over the buffer layer thickness and Tsol is
         # calculated.
@@ -156,46 +158,47 @@ def calculate() -> dict:
 
             # This is done for the metallic and semiconductive state of the VO2.
             numerator_metallic = simpson(
-                Tsol_me[thickness] *
+                tsol_me[thickness] *
                 astm_g_173["Global Total Spectral Irradiance. tilt 37Deg"],
-                x=Tsol_me["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+                x=tsol_me["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
             numerator_semiconductive = simpson(
-                Tsol_sc[thickness] *
+                tsol_sc[thickness] *
                 astm_g_173["Global Total Spectral Irradiance. tilt 37Deg"],
-                x=Tsol_sc["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+                x=tsol_sc["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
             # The fraction of the numerator and denominator is calculated for
             # the metallic and semiconducting state.
-            Tsol_metallic = numerator_metallic / denominator
-            Tsol_semiconductive = numerator_semiconductive / denominator
+            tsol_metallic = numerator_metallic / denominator
+            tsol_semiconductive = numerator_semiconductive / denominator
 
             # The difference between the two states is calculated.
-            deltaTsol = Tsol_semiconductive - Tsol_metallic
+            delta_tsol = tsol_semiconductive - tsol_metallic
 
             # The calculated characteristics are added to the dictionary.
-            Tsol_dict[thickness] = Tsol_metallic, Tsol_semiconductive, deltaTsol
+            tsol_dict[thickness] = tsol_metallic, tsol_semiconductive, delta_tsol
 
         # ===================================================== #
         # ===================Calculate T2500=================== #
         # ===================================================== #
 
         # An empty dictionary for the values of T@2500 is initialized.
-        T2500_dict = {}
+        t2500_dict = {}
 
         # The spectrum is set to the data point at 2500nm to calculate the
         # difference in transmittance between the semiconducting and
         # metallic states.
-        T2500_metallic = metallic_map.loc[(metallic_map["Wavelength (nm)"] == 2500)]
-        T2500_semiconductive = semiconductive_map.loc[(semiconductive_map["Wavelength (nm)"] == 2500)]
+        t2500_metallic = metallic_map.loc[(metallic_map["Wavelength (nm)"] == 2500)]
+        t2500_semiconductive = semiconductive_map.loc[
+            (semiconductive_map["Wavelength (nm)"] == 2500)]
 
         # It is iterated over the buffer layer thickness and T@2500 is
         # calculated.
         for thickness in buffer_thickness:
-            T2500_dict[thickness] = (T2500_semiconductive[thickness] -
-                          T2500_metallic[thickness]).values[0]
+            t2500_dict[thickness] = (t2500_semiconductive[thickness] -
+                          t2500_metallic[thickness]).values[0]
 
         # The calculated characteristics are added to the dictionary.
-        new_map_dict[key.replace("_me", "")] = Tlum_dict, Tsol_dict, T2500_dict
+        new_map_dict[key.replace("_me", "")] = tlum_dict, tsol_dict, t2500_dict
     # The dictionary is returned from the function.
     return new_map_dict

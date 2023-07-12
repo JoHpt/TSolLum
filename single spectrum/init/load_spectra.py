@@ -1,4 +1,5 @@
-"""This module reads the transmission spectra of the VO2 and prepares them for
+"""
+This module reads the transmission spectra of the VO2 and prepares them for
 the calculation.
 """
 import glob
@@ -9,7 +10,8 @@ from scipy.interpolate import interp1d
 
 
 def load_spectra() -> list:
-    '''Info
+    """
+    Info
     ----
     This function reads the transmission spectra from the folder
     "input_spectra" and prepares them in a list to use them for the
@@ -24,7 +26,7 @@ def load_spectra() -> list:
     List
         Form of the list:
             list(DataFrame, DataFrame, ...)
-    '''
+    """
     # Reads the spectra with the help of the glob module.
     simulated_spectra = glob.glob("./input_spectra/*.txt")
 
@@ -37,7 +39,8 @@ def load_spectra() -> list:
     # and metallic transmission spectrum must be present for each layer
     # system of VO2.
     if len(metallic_spectra) != len(semiconductive_spectra):
-        msg = "Check your folder with the simulated spectra. There are not equally spectra for metallic and semiconducting states."
+        msg = ("Check your folder with the simulated spectra. There are not"
+               "equally spectra for metallic and semiconducting states.")
         raise FileNotFoundError(msg)
 
     # Initializes an empty list and iterates over the lists containing the
@@ -49,7 +52,9 @@ def load_spectra() -> list:
         # ("_me_" or "_sc_"). A calculation of the characteristics from
         # different sample series is not useful.
         if metallic.replace("_me_", "") != semiconductive.replace("_sc_", ""):
-            msg = "Check the file names and remember to name the metallic and semiconducting states the same, with the difference of '_me_' or '_sc_'."
+            msg = ("Check the file names and remember to name the metallic and"
+                   "semiconducting states the same, with the difference"
+                   "of '_me_' or '_sc_'.")
             raise NameError(msg)
 
         # Reads the data for the metallic state into a DataFrame.
@@ -67,7 +72,7 @@ def load_spectra() -> list:
 
         # A DataFrame with the file name and the interpolated wavelength
         # or interpolated transmission is created.
-        VO2 = pd.DataFrame({
+        vo2 = pd.DataFrame({
             "Filename" : metallic.replace("_me_", "").split("\\")[-1].split(".")[0],
             "Wavelength (nm)" : np.linspace(start, end, steps),
             "Transmittance (%) - metallic" : me_interp(np.linspace(start, end, steps))})
@@ -82,10 +87,10 @@ def load_spectra() -> list:
         end = int(sc["Wavelength (nm)"].iloc[-1])
         steps = end - start + 1
 
-        VO2["Transmittance (%) - semiconductive"] = sc_interp(np.linspace(start, end, steps))
+        vo2["Transmittance (%) - semiconductive"] = sc_interp(np.linspace(start, end, steps))
 
         # The DataFrame is added to a list and returned by the function.
-        spectra.append(VO2)
+        spectra.append(vo2)
 
     print("Spectra are successfully imported!")
     return spectra

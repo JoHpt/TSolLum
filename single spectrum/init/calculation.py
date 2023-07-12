@@ -1,4 +1,5 @@
-"""This module is used for calculation of optical parameters of transmission
+"""
+This module is used for calculation of optical parameters of transmission
 spectra of VO2 thin film systems.
 """
 import pandas as pd
@@ -7,7 +8,8 @@ from scipy.integrate import simpson
 
 
 def calculate() -> pd.DataFrame:
-    """Info
+    """
+    Info
     ----
     The function uses the entered simulated spectra of VO2 and calculates them
     with the help of the reference spectra:
@@ -45,7 +47,7 @@ def calculate() -> pd.DataFrame:
     spectra = load_spectra()
 
     # Iterates over all spectra.
-    for spectra in spectra:
+    for spectrum in spectra:
 
         # ==================================================== #
         # ===================Calculate Tlum=================== #
@@ -53,8 +55,8 @@ def calculate() -> pd.DataFrame:
 
         # Cuts the spectra for the calculation of Tlum to a wavelength range
         # from 380 to 780nm.
-        Tlum_spectra = (spectra[(spectra["Wavelength (nm)"] >= 380) &
-                                (spectra["Wavelength (nm)"] <= 780)]
+        tlum_spectum = (spectrum[(spectrum["Wavelength (nm)"] >= 380) &
+                                (spectrum["Wavelength (nm)"] <= 780)]
                         ).reset_index(drop=True)
 
         # Calculates the denominator using the product of the reference
@@ -62,7 +64,7 @@ def calculate() -> pd.DataFrame:
         # range using Simpson's rule.
         denominator = simpson(
             d65["CIE Standard Illuminant D65"] * vlambda["spectral sensistivity"],
-            x=Tlum_spectra["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+            x=tlum_spectum["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
         # Calculates the numerator using the product of the Simulated Spectrum
         # and the D65 and V-Lambda reference spectra. This product is integrated
@@ -70,24 +72,24 @@ def calculate() -> pd.DataFrame:
 
         # This is done for the metallic and semiconductive state of the VO2.
         numerator_metallic = simpson(
-            Tlum_spectra["Transmittance (%) - metallic"] *
+            tlum_spectum["Transmittance (%) - metallic"] *
             d65["CIE Standard Illuminant D65"] *
             vlambda["spectral sensistivity"],
-            x=Tlum_spectra["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+            x=tlum_spectum["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
         numerator_semiconductive = simpson(
-            Tlum_spectra["Transmittance (%) - semiconductive"] *
+            tlum_spectum["Transmittance (%) - semiconductive"] *
             d65["CIE Standard Illuminant D65"] *
             vlambda["spectral sensistivity"],
-            x=Tlum_spectra["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+            x=tlum_spectum["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
         # The fraction of the numerator and denominator is calculated for
         # the metallic and semiconducting state.
-        Tlum_metallic = numerator_metallic / denominator
-        Tlum_semiconductive = numerator_semiconductive / denominator
+        tlum_metallic = numerator_metallic / denominator
+        tlum_semiconductive = numerator_semiconductive / denominator
 
         # The difference between the two states is calculated.
-        deltaTlum = Tlum_semiconductive - Tlum_metallic
+        delta_tlum = tlum_semiconductive - tlum_metallic
 
         # ==================================================== #
         # ===================Calculate Tsol=================== #
@@ -95,15 +97,15 @@ def calculate() -> pd.DataFrame:
 
         # Cuts the spectra for the calculation of Tsol to a wavelength range
         # from 200 to 3000nm.
-        Tsol_spectra = spectra[(spectra["Wavelength (nm)"] >= 200) &
-                                (spectra["Wavelength (nm)"] <= 3000)]
+        tsol_spectrum = spectrum[(spectrum["Wavelength (nm)"] >= 200) &
+                                (spectrum["Wavelength (nm)"] <= 3000)]
 
         # Calculates the denominator using the product of the reference
         # spectrum ASTM-G-173. This product is integrated over the entire
         # range using Simpson's rule.
         denominator = simpson(
             astm_g_173["Global Total Spectral Irradiance. tilt 37Deg"],
-            x=Tsol_spectra["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+            x=tsol_spectrum["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
         # Calculates the numerator using the product of the Simulated Spectrum
         # and ASTM-G-173 reference spectrum. This product is integrated
@@ -111,22 +113,22 @@ def calculate() -> pd.DataFrame:
 
         # This is done for the metallic and semiconductive state of the VO2.
         numerator_metallic = simpson(
-            Tsol_spectra["Transmittance (%) - metallic"] *
+            tsol_spectrum["Transmittance (%) - metallic"] *
             astm_g_173["Global Total Spectral Irradiance. tilt 37Deg"],
-            x=Tsol_spectra["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+            x=tsol_spectrum["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
         numerator_semiconductive = simpson(
-            Tsol_spectra["Transmittance (%) - semiconductive"] *
+            tsol_spectrum["Transmittance (%) - semiconductive"] *
             astm_g_173["Global Total Spectral Irradiance. tilt 37Deg"],
-            x=Tsol_spectra["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
+            x=tsol_spectrum["Wavelength (nm)"], dx=1.0, axis=-1, even="avg")
 
         # The fraction of the numerator and denominator is calculated for
         # the metallic and semiconducting state.
-        Tsol_metallic = numerator_metallic / denominator
-        Tsol_semiconductive = numerator_semiconductive / denominator
+        tsol_metallic = numerator_metallic / denominator
+        tsol_semiconductive = numerator_semiconductive / denominator
 
         # The difference between the two states is calculated.
-        deltaTsol = Tsol_semiconductive - Tsol_metallic
+        delta_tsol = tsol_semiconductive - tsol_metallic
 
         # ===================================================== #
         # ===================Calculate T2500=================== #
@@ -135,21 +137,22 @@ def calculate() -> pd.DataFrame:
         # The spectrum is set to the data point at 2500nm to calculate the
         # difference in transmittance between the semiconducting and
         # metallic states.
-        T2500 = spectra.loc[(spectra["Wavelength (nm)"] == 2500)]
-        deltaT2500 = (T2500["Transmittance (%) - semiconductive"] -
-                      T2500["Transmittance (%) - metallic"]).values[0]
+        t2500 = spectrum.loc[(spectrum["Wavelength (nm)"] == 2500)]
+        delta_t2500 = (t2500["Transmittance (%) - semiconductive"] -
+                      t2500["Transmittance (%) - metallic"]).values[0]
 
         # A DataFrame with the calculated characteristics is created.
-        results = pd.DataFrame({"Filename" : [spectra["Filename"][0]],
-                                "Tlum (metallic)" : [Tlum_metallic],
-                                "Tlum (semiconductive)" : [Tlum_semiconductive],
-                                "ΔTlum" : [deltaTlum],
-                                "Tsol (metallic)" : [Tsol_metallic],
-                                "Tsol (semiconductive)" : [Tsol_semiconductive],
-                                "ΔTsol" : [deltaTsol],
-                                "ΔT@2500" : [deltaT2500]})
+        results = pd.DataFrame({"Filename" : [spectrum["Filename"][0]],
+                                "Tlum (metallic)" : [tlum_metallic],
+                                "Tlum (semiconductive)" : [tlum_semiconductive],
+                                "ΔTlum" : [delta_tlum],
+                                "Tsol (metallic)" : [tsol_metallic],
+                                "Tsol (semiconductive)" : [tsol_semiconductive],
+                                "ΔTsol" : [delta_tsol],
+                                "ΔT@2500" : [delta_t2500]})
 
         # This DataFrame is saved in the "output" folder as ".txt".
-        results.to_csv(f".\\output\\{filename}.txt", sep="\t", header=True, index=False, decimal=".")
+        results.to_csv(f".\\output\\{filename}.txt",
+                       sep="\t", header=True, index=False, decimal=".")
         return results
     return None

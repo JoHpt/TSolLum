@@ -1,4 +1,5 @@
-'''This program is intended for visualization of optical characteristics of
+"""
+This program is intended for visualization of optical characteristics of
 multilayer systems based on VO2. Thus, variations in two layer thicknesses
 (e.g. buffer and antireflection layer) can be displayed graphically with the
 help of a contour plot.
@@ -49,21 +50,19 @@ An example of what such a file should look like is shown here:
 220	3,50	3,88	4,22	4,45	4,47
 ...
 
-'''
+"""
 import sys
+import warnings
+
+from order_save import order_and_save_result
+from plotting import plot
 
 # caution: path[0] is reserved for script path (or '' in REPL)
 sys.path.insert(1, "./init/")
 
-import warnings
-
 # PerformanceWarning: DataFrame is highly fragmented.  This is usually the
 # result of calling `frame.insert` many times, which has poor performance.
 warnings.filterwarnings("ignore")
-
-
-from order_save import order_and_save_result
-from plotting import plot
 
 need_calculation = True
 
