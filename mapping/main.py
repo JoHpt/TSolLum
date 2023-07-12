@@ -1,10 +1,9 @@
-'''
-This program is intended for visualization of optical characteristics of 
-multilayer systems based on VO2. Thus, variations in two layer thicknesses 
-(e.g. buffer and antireflection layer) can be displayed graphically with the 
+'''This program is intended for visualization of optical characteristics of
+multilayer systems based on VO2. Thus, variations in two layer thicknesses
+(e.g. buffer and antireflection layer) can be displayed graphically with the
 help of a contour plot.
 
-These characteristics are derived from transmission spectra, which are 
+These characteristics are derived from transmission spectra, which are
 available as a so-called "map". The optical characteristics are:
     - Tlum (metallic state)
     - Tlum (semiconducting state)
@@ -14,24 +13,24 @@ available as a so-called "map". The optical characteristics are:
     - ΔTsol
     - ΔT@2500nm
 
-The imported files must have the following structure. The first column of the 
-file has an empty header and contains the wavelength for which the 
-transmission spectra were recorded. The following right columns contain the 
-transmission values as a function of the layer thickness, which is the 
+The imported files must have the following structure. The first column of the
+file has an empty header and contains the wavelength for which the
+transmission spectra were recorded. The following right columns contain the
+transmission values as a function of the layer thickness, which is the
 header.
-        
+
 The values must be separated by commas.
 
 The simulated spectra must start at least at 200nm and end at least at 3000nm.
 
 The spectra describing the two states of VO2 (metallic and semiconducting)
-must be included in the file names. Thus, for spectra representing the 
-metallic state, "_me_" must be present in the file name. For the 
-semiconducting state correspondingly "_sc_". 
+must be included in the file names. Thus, for spectra representing the
+metallic state, "_me_" must be present in the file name. For the
+semiconducting state correspondingly "_sc_".
 
 Furthermore, the transmission spectra must be saved in ".txt" format.
 
-In addition, the second varied layer thickness must be represented with a 
+In addition, the second varied layer thickness must be represented with a
 string of the form "_xnm_", where x is an integer.
 
 An example of what such a file should look like is shown here:
@@ -52,11 +51,13 @@ An example of what such a file should look like is shown here:
 
 '''
 import sys
+
 # caution: path[0] is reserved for script path (or '' in REPL)
-sys.path.insert(1, './init/')
+sys.path.insert(1, "./init/")
 
 import warnings
-# PerformanceWarning: DataFrame is highly fragmented.  This is usually the 
+
+# PerformanceWarning: DataFrame is highly fragmented.  This is usually the
 # result of calling `frame.insert` many times, which has poor performance.
 warnings.filterwarnings("ignore")
 
@@ -67,7 +68,7 @@ from plotting import plot
 need_calculation = True
 
 # Calculation and sorting is only performed if Bool is set as True.
-if need_calculation == True:
+if need_calculation is True:
     order_and_save_result()
 
 plot()
