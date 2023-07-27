@@ -36,23 +36,24 @@ def plot() -> None:
         buffer_thickness = list(data["Unnamed: 0"])
 
         # The axes are set and a grid for the plot is defined.
-        x = ar_thickness
-        y = buffer_thickness
+        x = buffer_thickness
+        y = ar_thickness
         X, Y = np.meshgrid(x, y)
 
         # The meshgrid is converted to a list.
         X = X.tolist()
         Y = Y.tolist()
         # The Z data is extracted from the DataFrame and added to a list.
-        Z = data.drop("Unnamed: 0", axis=1).values.tolist()
+        Z = np.transpose(data.drop("Unnamed: 0", axis=1).values).tolist()
+        
 
         # The actual graphing is done and the specifications of the
         # plot are determined.
         plt.contourf(X, Y, Z, cmap="turbo", levels=50)
         plt.colorbar(label="%")
         plt.title(titles[file])
-        plt.xlabel("AR thickness / nm")
-        plt.ylabel("Buffer thickness / nm")
+        plt.ylabel("Anti-reflection layer thickness / nm")
+        plt.xlabel("Buffer thickness / nm")
 
         # The plot is saved in the "output" folder.
         data_name = file.split("\\")[-1].split(".")[0]
