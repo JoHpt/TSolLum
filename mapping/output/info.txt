@@ -1,1 +1,0 @@
-The results and graphical plotting of the simulated spectra are stored here.
