@@ -31,7 +31,7 @@ $$\Delta T_{@2500\,nm} = T_{@2500nm}(semiconductive) - T_{@2500nm}(metallic)$$
 
 To install TSolLum, use the following command:
 ```
-pip install TSolLum
+pip install TSolLum==23.7
 ```
 
 ## Input Data Format
@@ -95,7 +95,7 @@ MIT
 
 ## Version
 
-0.0.0
+23.7
 
 ## Last Updated
 
