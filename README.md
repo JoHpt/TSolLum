@@ -70,7 +70,7 @@ tlum_me = TSolLum.calculate_tlum(spectrum=spectrum_me)
 tsol_sc = TSolLum.calculate_tsol(spectrum=spectrum_sc)
 tsol_me = TSolLum.calculate_tsol(spectrum=spectrum_me)
 
-# Calculate the stroke temperature using the semiconductive and metallic spectra
+# Calculate the transmittance stroke using the semiconductive and metallic spectra
 tstroke = TSolLum.calculate_tstroke(semiconductive_spectrum=spectrum_sc,
                                     metallic_spectrum=spectrum_me)
 ```
