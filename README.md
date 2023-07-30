@@ -2,6 +2,10 @@
 
 TSolLum is a Python package designed to analyze the optical properties of a smart window coating material called vanadium dioxide (VO2). VO2 is utilized in smart windows due to its unique phase transition from a semiconductive state to a metallic state at a specific temperature. This property allows the smart windows to dynamically control the amount of solar radiation and heat entering a room, offering energy-efficient solutions for maintaining comfortable indoor temperatures.
 
+## PyPi
+
+https://pypi.org/project/TSolLum/
+
 ## Purpose
 
 The primary goal of this package is to provide insights into the performance of VO2 smart window coatings in different states and their effectiveness in controlling solar radiation and room temperatures. The key optical properties calculated by the package are as follows:
